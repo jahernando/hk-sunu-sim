@@ -71,16 +71,34 @@ ATM_EVENTS = pa.schema([
     ("extent", pa.float32()),        # max distance of any deposit from vertex [cm]
 ])
 
-ATM_PARTICLES = pa.schema([
+# Light emission from wcprop: photon-weighted sums per 10 ns bin (see wcprop.cc)
+LIGHT = pa.schema([
     ("batch", pa.int32()),
     ("event_id", pa.int64()),
+    ("tbin", pa.int64()),            # floor(t / 10 ns)
+    ("n", pa.float64()),             # mean Cherenkov photons, 300-600 nm
+    ("sx", pa.float64()), ("sy", pa.float64()), ("sz", pa.float64()),     # sum n*x [cm]
+    ("sux", pa.float64()), ("suy", pa.float64()), ("suz", pa.float64()),  # sum n*u
+    ("st", pa.float64()),            # sum n*t [ns]
+])
+
+# End of stopped/killed mu+- and pi+- (truth)
+ENDS = pa.schema([
+    ("batch", pa.int32()),
+    ("event_id", pa.int64()),
+    ("track_id", pa.int32()),
+    ("parent_id", pa.int32()),
     ("pdg", pa.int32()),
-    ("ekin", pa.float64()),          # [MeV]
-    ("x", pa.float32()), ("y", pa.float32()), ("z", pa.float32()),  # start [cm]
-    ("ux", pa.float32()), ("uy", pa.float32()), ("uz", pa.float32()),
-    ("t", pa.float64()),             # [ns]
-    ("above_cherenkov", pa.bool_()),
-    ("origin", pa.string()),         # primary, michel, deexcitation, secondary
+    ("process", pa.string()),
+    ("fate", pa.string()),           # decay, capture, absorption, inelastic, other
+    ("t", pa.float64()),             # time of the end products [ns]
+    ("x", pa.float32()), ("y", pa.float32()), ("z", pa.float32()),
+    ("e_charged", pa.float32()),     # kinetic energy of charged end products [MeV]
+    ("n_neutron", pa.int16()),
+    ("n_gamma", pa.int16()),         # includes muonic/pionic X-rays
+    ("e_gamma", pa.float32()),
+    ("n_nu", pa.int16()),
+    ("target_z", pa.int16()),        # nucleus that took a stopped mu-/pi- (0 if none)
 ])
 
 ATM_NCAPTURES = pa.schema([
@@ -97,6 +115,7 @@ TABLES = {
     "isotopes": ISOTOPES,
     "ncaptures": NCAPTURES,
     "atm_events": ATM_EVENTS,
-    "atm_particles": ATM_PARTICLES,
+    "light": LIGHT,
+    "ends": ENDS,
     "atm_ncaptures": ATM_NCAPTURES,
 }

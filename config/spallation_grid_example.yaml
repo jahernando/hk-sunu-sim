@@ -1,0 +1,18 @@
+# Example spallation production on a muon-energy grid (infinite water).
+production: spall_grid_v0
+tool: fluka            # fluka | geant4
+tool_version: null     # filled from the container
+physics: default       # FLUKA defaults / Geant4 physics list name
+medium: water
+density: 1.0           # g/cm3
+muon:
+  charge_ratio: 1.37   # mu+/mu- at depth, to be checked
+  energies_gev: [10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000]
+  n_per_energy: 1000   # pilot value, for the CPU benchmark
+segment:
+  buildup_cm: 500      # track length before recording, for secondary equilibrium
+  record_cm: 5000      # recorded length
+  dedx_bin_cm: 50
+seed:
+  base: 1
+  scheme: "base * 1_000_000 + array_index"

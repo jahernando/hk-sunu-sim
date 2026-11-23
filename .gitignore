@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+build/
+dist/
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Papers and reference documents are not distributed
+*.pdf
+
+# Production output stays out of git
+data/*
+!data/README.md
+*.parquet
+*.h5
+*.root
+slurm-*.out
+
+# Collaboration software and inputs must never be committed (see README)
+production/atmospheric/neut/private/
+**/hk_internal/
+
+# Containers
+*.sif
+
+# OS / editors
+.DS_Store
+.vscode/
+.idea/

@@ -1,0 +1,18 @@
+# Example atmospheric-neutrino production for SK-IV validation.
+production: atm_sk4_v0
+generator: genie       # genie | neut
+generator_version: null
+flux:
+  nominal: hkkm2014_kamioka_solmin
+  alternatives: [hkkm2014_kamioka_solmax, fluka_battistoni2005]
+oscillation: nufit_nominal
+flavours: [12, -12, 14, -14, 16, -16]
+e_nu_mev: [50, 10000]
+sampling: log_flat
+n_events: 100000       # first milestone
+propagation:
+  tool: geant4
+  physics: QGSP_BIC_HP
+seed:
+  base: 1
+  scheme: "base * 1_000_000 + array_index"

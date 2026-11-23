@@ -81,6 +81,14 @@ pytest
 
 ## Status
 
-Skeleton. The simulation plan and its rationale are in the project notes. The
-first milestone is a small atmospheric-neutrino production in the SK-IV
-configuration, compared category by category with SK-IV Table XIV.
+First milestone (atmospheric neutrinos in the SK-IV configuration, compared
+with SK-IV Table XIV) in progress:
+
+- [x] `wcprop`: Geant4 propagation in water, validated at low energy
+  (`validation/g4_lowe_checks.py`)
+- [x] HKKM 2014 flux reader (`flux.py`; tables downloaded from the authors' page)
+- [x] parametrised response: energy, vertex, neutron tagging (`response.py`)
+- [x] candidate building and truth categories (`events.py`)
+- [ ] neutrino generator (GENIE / NEUT) and converter to wcprop input
+- [ ] Cherenkov-angle proxy calibration
+- [ ] comparison with SK-IV

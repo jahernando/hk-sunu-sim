@@ -1,4 +1,6 @@
 import numpy as np
+
+_trapz = getattr(np, "trapezoid", None) or np.trapz  # numpy < 2 has only trapz
 import pandas as pd
 import pytest
 
@@ -10,7 +12,7 @@ from hk_sunu_sim import events, flux, response
 def test_hkkm_integrals_and_ratio():
     t = flux.load("min")
     e = np.geomspace(100, 1e4, 500)
-    numu = np.trapezoid(t.flux_solid_angle_integrated(14, e), e)
+    numu = _trapz(t.flux_solid_angle_integrated(14, e), e)
     assert 1.2 < numu < 1.8           # cm^-2 s^-1 above 0.1 GeV
     assert t.flux(14, 50.0, 0.5)[0] == 0.0
     assert t.flux(14, 50.0, 0.5, extrapolate=True)[0] > t.flux(14, 100.0, 0.5)[0]

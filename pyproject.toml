@@ -12,6 +12,7 @@ dependencies = ["numpy", "scipy", "pandas", "pyarrow", "pyyaml"]
 
 [project.optional-dependencies]
 dev = ["pytest"]
+nb = ["matplotlib", "jupyter"]
 
 [tool.setuptools.packages.find]
 where = ["src"]

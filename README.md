@@ -63,6 +63,7 @@ This repository is public. It contains **only our own code and inputs**:
 | Path | Content |
 |---|---|
 | `src/hk_sunu_sim/` | Python package: table schemas and I/O, parametrised response, tank placement, spallation folding |
+| `NB/` | Validation notebooks (see below) |
 | `production/spallation/` | FLUKA and Geant4 inputs for muons in infinite water; muon flux at depth |
 | `production/atmospheric/` | Flux tables, generator configurations (GENIE, NEUT), Geant4 propagation |
 | `config/` | One YAML file per production |
@@ -75,9 +76,19 @@ This repository is public. It contains **only our own code and inputs**:
 ## Setup
 
 ```bash
-pip install -e ".[dev]"
+pip install -e ".[dev,nb]"
 pytest
 ```
+
+## Notebooks
+
+| Notebook | Content | Needs |
+|---|---|---|
+| `NB01_wcprop_lowe_validation` | Geant4 low-energy physics in water: e⁻ light yield and resolution, μ± at rest, π± at rest, neutron capture | `data/g4checks` from `validation/g4_lowe_checks.py` |
+| `NB02_hkkm_flux` | HKKM 2014 flux at Kamioka: spectra, ratios, solar and zenith dependence, the gap below 100 MeV | HKKM tables in `data/flux/hkkm2014` |
+| NB03 (planned) | Generator: ν / ν̄ spectra, interaction modes vs E_ν, lepton energy, neutron multiplicity, ¹⁶O de-excitation γ | generator events |
+| NB04 (planned) | Final-state particles above / below the Cherenkov threshold, per event and per particle | generator + wcprop |
+| NB05 (planned) | Response, candidates and comparison with SK-IV Table XIV | all of the above |
 
 ## Status
 

@@ -13,6 +13,7 @@ dependencies = ["numpy", "scipy", "pandas", "pyarrow", "pyyaml"]
 [project.optional-dependencies]
 dev = ["pytest"]
 nb = ["matplotlib", "jupyter"]
+genie = ["uproot>=5", "awkward"]
 
 [tool.setuptools.packages.find]
 where = ["src"]

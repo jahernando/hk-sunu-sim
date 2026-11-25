@@ -71,6 +71,40 @@ ATM_EVENTS = pa.schema([
     ("extent", pa.float32()),        # max distance of any deposit from vertex [cm]
 ])
 
+# Generator truth, one row per interaction (written by genie.py / neut.py)
+ATM_GEN = pa.schema([
+    ("batch", pa.int32()),
+    ("event_id", pa.int64()),
+    ("nu_pdg", pa.int32()),
+    ("e_nu", pa.float64()),          # [MeV]
+    ("ux", pa.float32()), ("uy", pa.float32()), ("uz", pa.float32()),  # nu direction
+    ("target_z", pa.int16()),        # 1 = free proton, 8 = 16O
+    ("target_a", pa.int16()),
+    ("hit_nucleon", pa.int32()),     # pdg of the struck nucleon (0 if none)
+    ("cc", pa.bool_()),
+    ("mode", pa.string()),           # process: qel, mec, res, dis, coh, nuel, imd, other
+    ("channel", pa.string()),        # common table (genie.CHANNELS), generator independent
+    ("gen_code", pa.string()),       # generator native code (GENIE process string, NEUT mode)
+    ("n_pi_primary", pa.int16()),    # pions before FSI
+    ("n_pi", pa.int16()),            # pions after FSI
+    ("n_neutron", pa.int16()),       # neutrons after FSI
+    ("lepton_pdg", pa.int32()),
+    ("e_lepton", pa.float64()),      # total energy [MeV]
+    ("cos_lepton", pa.float32()),    # angle to the neutrino direction
+    ("q2", pa.float64()),            # [MeV^2]
+    ("w_xsec", pa.float64()),        # generator cross section for this event [cm2] (0 if unknown)
+])
+
+# Final-state particles leaving the nucleus (lepton + hadrons after FSI)
+ATM_PARTICLES = pa.schema([
+    ("batch", pa.int32()),
+    ("event_id", pa.int64()),
+    ("pdg", pa.int32()),
+    ("e", pa.float64()),             # total energy [MeV]
+    ("px", pa.float64()), ("py", pa.float64()), ("pz", pa.float64()),  # [MeV/c]
+    ("is_lepton", pa.bool_()),       # the primary lepton
+])
+
 # Light emission from wcprop: photon-weighted sums per 10 ns bin (see wcprop.cc)
 LIGHT = pa.schema([
     ("batch", pa.int32()),
@@ -115,6 +149,8 @@ TABLES = {
     "isotopes": ISOTOPES,
     "ncaptures": NCAPTURES,
     "atm_events": ATM_EVENTS,
+    "atm_gen": ATM_GEN,
+    "atm_particles": ATM_PARTICLES,
     "light": LIGHT,
     "ends": ENDS,
     "atm_ncaptures": ATM_NCAPTURES,
